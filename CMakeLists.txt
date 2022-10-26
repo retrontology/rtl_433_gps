@@ -251,6 +251,29 @@ else()
 endif()
 
 ########################################################################
+# Find optional libGPS build dependencies
+########################################################################
+set(ENABLE_LIBGPS AUTO CACHE STRING "Enable libGPS support")
+set_property(CACHE ENABLE_LIBGPS PROPERTY STRINGS AUTO ON OFF)
+if(ENABLE_LIBGPS) # AUTO / ON
+
+find_package(LibGPS)
+if(LibGPS_FOUND)
+    message(STATUS "libGPS support will be compiled. Found version ${LibGPS_VERSION}")
+    include_directories(${LibGPS_INCLUDE_DIRS})
+    list(APPEND SDR_LIBRARIES ${LibGPS_LIBRARIES})
+    ADD_DEFINITIONS(-DLIBGPS)
+elseif(ENABLE_LIBGPS STREQUAL "AUTO")
+    message(STATUS "libGPS development files not found, libGPS fucntionality won't be possible.")
+else()
+    message(FATAL_ERROR "libGPS development files not found.")
+endif()
+
+else()
+    message(STATUS "libGPS functionality disabled.")
+endif()
+
+########################################################################
 # Setup optional Profiling with GPerfTools
 ########################################################################
 # cmake -DCMAKE_BUILD_TYPE=Profile ..
@@ -267,6 +290,7 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "Profile")
     ADD_DEFINITIONS(-fno-builtin-realloc)
     ADD_DEFINITIONS(-fno-builtin-free)
 endif()
+
 
 ########################################################################
 # Setup the include and linker paths

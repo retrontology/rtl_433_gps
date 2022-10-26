@@ -18,7 +18,7 @@ find_path(LibGPS_INCLUDE_DIR NAMES gps.h
           /usr/include
           /usr/local/include )
 
-find_library(LibGPS_LIBRARY NAMES libgps
+find_library(LibGPS_LIBRARY NAMES libgps.so
              HINTS ${PC_LibGPS_LIBRARY_DIRS}
              PATHS
              /usr/lib
