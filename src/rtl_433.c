@@ -54,6 +54,7 @@
 #include "fatal.h"
 #include "write_sigrok.h"
 #include "mongoose.h"
+#include "gpsd.h"
 
 #ifdef _WIN32
 #include <io.h>
